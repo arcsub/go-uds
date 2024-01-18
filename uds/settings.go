@@ -58,9 +58,9 @@ type MembershipTier struct {
 	} `json:"conditions,omitempty"`
 }
 
-// GetSettings Получение настроек компании
+// SettingsGet Получение настроек компании
 // https://docs.uds.app/#tag/Settings/paths/~1settings/get
-func (u *Client) GetSettings() (*Settings, *resty.Response, error) {
+func (u *Client) SettingsGet() (*Settings, *resty.Response, error) {
 	settings := new(Settings)
 
 	resp, err := u.client.R().SetResult(settings).Get("settings")

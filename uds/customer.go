@@ -65,10 +65,10 @@ type CustomerShortInfo struct {
 	MembershipTier MembershipTier `json:"membershipTier"` // Настройки статусов клиентов.
 }
 
-// GetCustomers
+// CustomerGetList
 // Получить список клиентов
 // https://docs.uds.app/#tag/Customers/paths/~1customers/get
-func (u *Client) GetCustomers(maxValue int, offset int) (*List[Customer], *resty.Response, error) {
+func (u *Client) CustomerGetList(maxValue int, offset int) (*List[Customer], *resty.Response, error) {
 	customers := new(List[Customer])
 
 	req := u.client.R()
@@ -149,37 +149,37 @@ func findCustomerProcess(req *resty.Request, params *FindCustomerParams) (*FindC
 	return customer, resp, nil
 }
 
-// FindCustomerByCode
+// CustomerFindByCode
 // Поиск клиента по коду из приложения
 // params может быть nil
 // https://docs.uds.app/#tag/Customers/paths/~1customers~1find/get
-func (u *Client) FindCustomerByCode(code string, params *FindCustomerParams) (*FindCustomerResponse, *resty.Response, error) {
+func (u *Client) CustomerFindByCode(code string, params *FindCustomerParams) (*FindCustomerResponse, *resty.Response, error) {
 	req := u.client.R().SetQueryParam("code", code)
 	return findCustomerProcess(req, params)
 }
 
-// FindCustomerByPhone
+// CustomerFindByPhone
 // Поиск клиента по номеру телефона в формате +79998887766
 // params может быть nil
 // https://docs.uds.app/#tag/Customers/paths/~1customers~1find/get
-func (u *Client) FindCustomerByPhone(phone string, params *FindCustomerParams) (*FindCustomerResponse, *resty.Response, error) {
+func (u *Client) CustomerFindByPhone(phone string, params *FindCustomerParams) (*FindCustomerResponse, *resty.Response, error) {
 	req := u.client.R().SetQueryParam("phone", phone)
 	return findCustomerProcess(req, params)
 }
 
-// FindCustomerByUID
+// CustomerFindByUID
 // Поиск клиента по uid
 // params может быть nil
 // https://docs.uds.app/#tag/Customers/paths/~1customers~1find/get
-func (u *Client) FindCustomerByUID(uid string, params *FindCustomerParams) (*FindCustomerResponse, *resty.Response, error) {
+func (u *Client) CustomerFindByUID(uid string, params *FindCustomerParams) (*FindCustomerResponse, *resty.Response, error) {
 	req := u.client.R().SetQueryParam("uid", uid)
 	return findCustomerProcess(req, params)
 }
 
-// GetCustomerByID
+// CustomerGetByID
 // Получение информации о клиенте по ID
 // https://docs.uds.app/#tag/Customers/paths/~1customers~1{id}/get
-func (u *Client) GetCustomerByID(id int64) (*CustomerDetail, *resty.Response, error) {
+func (u *Client) CustomerGetByID(id int64) (*CustomerDetail, *resty.Response, error) {
 	customer := new(CustomerDetail)
 	apiErr := new(ApiError)
 
@@ -216,10 +216,10 @@ type TagModel struct {
 	Name string `json:"name"` // Наименование тега.
 }
 
-// GetCustomerTags
+// CustomerGetTags
 // Получение списка тегов клиента
 // https://docs.uds.app/#tag/Customers/paths/~1customers~1{id}~1tags/get
-func (u *Client) GetCustomerTags(id int64) (*CustomerTagList, *resty.Response, error) {
+func (u *Client) CustomerGetTags(id int64) (*CustomerTagList, *resty.Response, error) {
 	tags := new(CustomerTagList)
 	apiErr := new(ApiError)
 
@@ -248,10 +248,10 @@ type SetCustomerTagsRequest struct {
 	IDs []int64 `json:"ids"`
 }
 
-// SetCustomerTags
+// CustomerSetTags
 // Установка тегов клиенту
 // https://docs.uds.app/#tag/Customers/paths/~1customers~1{id}~1tags/get
-func (u *Client) SetCustomerTags(id int64, tagsReq SetCustomerTagsRequest) (*List[TagModel], *resty.Response, error) {
+func (u *Client) CustomerSetTags(id int64, tagsReq SetCustomerTagsRequest) (*List[TagModel], *resty.Response, error) {
 	tags := new(List[TagModel])
 	apiErr := new(ApiError)
 

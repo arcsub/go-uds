@@ -129,10 +129,10 @@ type GoodOrderItem struct {
 	Measurement GoodsMeasurement `json:"measurement"` // Единицы измерения товаров.
 }
 
-// GetGoodsOrderByID
+// GoodsOrderGetByID
 // Подробная информация о заказе
 // https://docs.uds.app/#tag/Goods-Order/paths/~1goods-orders~1{id}/get
-func (u *Client) GetGoodsOrderByID(id int64) (*GoodsOrderDetailed, *resty.Response, error) {
+func (u *Client) GoodsOrderGetByID(id int64) (*GoodsOrderDetailed, *resty.Response, error) {
 	goodsOrder := new(GoodsOrderDetailed)
 
 	idString := strconv.FormatInt(id, 10)
@@ -193,18 +193,18 @@ func updateGoodsOrderItemsProcess(req *resty.Request, id int64) (*GoodsOrderDeta
 	return goodsOrder, resp, nil
 }
 
-// UpdateGoodsOrderItems
+// GoodsOrderUpdateItems
 // Изменить товары заказа
 // https://docs.uds.app/#tag/Goods-Order/paths/~1goods-orders~1{id}/put
-func (u *Client) UpdateGoodsOrderItems(id int64, updatedOrder *UpdateGoodsOrderRequest[GoodsOrderItemUpdate]) (*GoodsOrderDetailed, *resty.Response, error) {
+func (u *Client) GoodsOrderUpdateItems(id int64, updatedOrder *UpdateGoodsOrderRequest[GoodsOrderItemUpdate]) (*GoodsOrderDetailed, *resty.Response, error) {
 	req := u.client.R().SetBody(updatedOrder)
 	return updateGoodsOrderItemsProcess(req, id)
 }
 
-// AddGoodsOrderItems
+// GoodsOrderAddItems
 // Добавить товары в заказ
 // https://docs.uds.app/#tag/Goods-Order/paths/~1goods-orders~1{id}/put
-func (u *Client) AddGoodsOrderItems(id int64, updatedOrder *UpdateGoodsOrderRequest[GoodsOrderItemNew]) (*GoodsOrderDetailed, *resty.Response, error) {
+func (u *Client) GoodsOrderAddItems(id int64, updatedOrder *UpdateGoodsOrderRequest[GoodsOrderItemNew]) (*GoodsOrderDetailed, *resty.Response, error) {
 	req := u.client.R().SetBody(updatedOrder)
 	return updateGoodsOrderItemsProcess(req, id)
 }
@@ -218,10 +218,10 @@ type CompleteGoodsOrder struct {
 	Order GoodsOrderDetailed `json:"order"` // Информация о заказе.
 }
 
-// CompleteGoodsOrder
+// GoodsOrderComplete
 // Завершает заказ товара с идентификатором и создает транзакцию
 // https://docs.uds.app/#tag/Goods-Order/paths/~1goods-orders~1{id}~1complete/post
-func (u *Client) CompleteGoodsOrder(id int64) (*CompleteGoodsOrder, *resty.Response, error) {
+func (u *Client) GoodsOrderComplete(id int64) (*CompleteGoodsOrder, *resty.Response, error) {
 	completeGoodsOrder := new(CompleteGoodsOrder)
 
 	idString := strconv.FormatInt(id, 10)
@@ -237,10 +237,10 @@ func (u *Client) CompleteGoodsOrder(id int64) (*CompleteGoodsOrder, *resty.Respo
 	return completeGoodsOrder, resp, nil
 }
 
-// GenerateCodeGoodsOrder
+// GoodsOrderGenerateCode
 // Сгенерировать код для завершения заказа товара с идентификатором
 // https://docs.uds.app/#tag/Goods-Order/paths/~1goods-orders~1{id}~1code/post
-func (u *Client) GenerateCodeGoodsOrder(id int64) (string, *resty.Response, error) {
+func (u *Client) GoodsOrderGenerateCode(id int64) (string, *resty.Response, error) {
 	type s struct {
 		Code string `json:"code"`
 	}

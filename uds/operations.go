@@ -81,10 +81,10 @@ type CashierExternal struct {
 	Name       *string `json:"name,omitempty"` // Имя сотрудника.
 }
 
-// GetOperations
+// OperationGetList
 // Получить Список операций
 // https://docs.uds.app/#tag/Operations/paths/~1operations/get
-func (u *Client) GetOperations(maxValue int, cursor string) (*OperationList, *resty.Response, error) {
+func (u *Client) OperationGetList(maxValue int, cursor string) (*OperationList, *resty.Response, error) {
 	operationList := new(OperationList)
 	apiErr := new(ApiError)
 
@@ -160,10 +160,10 @@ type CreateOperationResponse struct {
 	Cash          float64           `json:"cash"`          // Оплачиваемая сумма в денежных единицах.
 }
 
-// CreateOperation
+// OperationCreate
 // Проведение операции
 // https://docs.uds.app/#tag/Operations/paths/~1operations/post
-func (u *Client) CreateOperation(operation *CreateOperationRequest) (*CreateOperationResponse, *resty.Response, error) {
+func (u *Client) OperationCreate(operation *CreateOperationRequest) (*CreateOperationResponse, *resty.Response, error) {
 	createResp := new(CreateOperationResponse)
 
 	if operation.Nonce == "" {
@@ -182,10 +182,10 @@ func (u *Client) CreateOperation(operation *CreateOperationRequest) (*CreateOper
 	return createResp, resp, nil
 }
 
-// GetOperationByID
+// OperationGetByID
 // Получение информации об операции
 // https://docs.uds.app/#tag/Operations/paths/~1operations~1{id}/get
-func (u *Client) GetOperationByID(id int64) (*Operation, *resty.Response, error) {
+func (u *Client) OperationGetByID(id int64) (*Operation, *resty.Response, error) {
 	operation := new(Operation)
 
 	idString := strconv.FormatInt(id, 10)
@@ -207,10 +207,10 @@ type RefundOperationRequest struct {
 	PartialAmount float64 `json:"partialAmount"` // Сумма возврата.
 }
 
-// RefundOperationByID
+// OperationRefund
 // Операция возврата
 // https://docs.uds.app/#tag/Operations/paths/~1operations~1{id}~1refund/post
-func (u *Client) RefundOperationByID(id int64, partialAmount float64) (*Operation, *resty.Response, error) {
+func (u *Client) OperationRefund(id int64, partialAmount float64) (*Operation, *resty.Response, error) {
 	operation := new(Operation)
 
 	idString := strconv.FormatInt(id, 10)
@@ -270,10 +270,10 @@ type CalcOperationResponse struct {
 	Purchase PurchaseDetail    `json:"purchase"` // Информация об операции.
 }
 
-// CalcOperation
+// OperationCalc
 // Рассчитать информацию по операции
 // https://docs.uds.app/#tag/Operations/paths/~1operations~1calc/post
-func (u *Client) CalcOperation(operation *CalcOperationRequest) (*CalcOperationResponse, *resty.Response, error) {
+func (u *Client) OperationCalc(operation *CalcOperationRequest) (*CalcOperationResponse, *resty.Response, error) {
 	calcResp := new(CalcOperationResponse)
 
 	resp, err := u.client.R().
@@ -303,10 +303,10 @@ type RewardOperationResponse struct {
 	Accepted int `json:"accepted"` // Количество пользователей, которым будут начислены бонусные баллы.
 }
 
-// RewardOperation
+// OperationReward
 // Начисление бонусов клиенту (подарок)
 // https://docs.uds.app/#tag/Operations/paths/~1operations~1reward/post
-func (u *Client) RewardOperation(operation RewardOperationRequest) (*RewardOperationResponse, *resty.Response, error) {
+func (u *Client) OperationReward(operation RewardOperationRequest) (*RewardOperationResponse, *resty.Response, error) {
 	rewardResp := new(RewardOperationResponse)
 	apiErr := new(ApiError)
 
